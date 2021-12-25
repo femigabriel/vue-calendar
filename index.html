@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Clendar-2021</title>
+</head>
+<body>
+    <div class="calendar-popup" id="calendar-popup">
+        <div class="calendar">
+            <div class="calendar-navigation">
+                <a href="#" class="previous-month" v-if="!isHidden" @click="previousMonth(); hidePastMonths();">&lt;</a>
+                <span>{{ month[currentDate.month].name }} {{ currentDate.year }}</span>
+                <a href="#" class="next-month" @click="nextMonth(); hidePastMonths();">&gt;</a>
+            </div>
+            <div class="calendar-header">
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+                <div>Sun</div>
+            </div>
+            <div class="calendar-body">
+                <div v-for="(item, index) in calendarArray" class="calendar-row" key="index">
+                    <div v-for="(data, index) in item" :key="index">
+                       <span>{{ data.getDate() }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js">
+ </script>
+ <script>
+     var calendarApp = new Vue({
+	el: '#calendar-popup',
+	data: function() {
+		return {
+			month: [
+				{ id: 1, name: 'January' },
+				{ id: 2, name: 'February' },
+				{ id: 3, name: 'March' },
+				{ id: 4, name: 'April' },
+				{ id: 5, name: 'May' },
+				{ id: 6, name: 'June' },
+				{ id: 7, name: 'July' },
+				{ id: 8, name: 'August' },
+				{ id: 9, name: 'September' },
+				{ id: 10, name: 'October' },
+				{ id: 11, name: 'November' },
+				{ id: 12, name: 'December' }
+			],
+			currentDate: {
+				date: 0,
+				month: 0,
+				year: 0
+			},
+			isHidden: true
+		}
+	},
+	computed: {
+		prevMonthDays: function() {
+			var year = this.currentDate.month === 0 ? this.currentDate.year - 1 : this.currentDate.year;
+			var month = this.currentDate.month === 0 ? 11 : this.currentDate.month;
+			return new Date(year, month, 0).getDate();
+		},
+		firstMonthDay: function() {
+			var firstDay = new Date(this.currentDate.year, this.currentDate.month, 1).getDay();
+			if (firstDay === 0) firstDay = 6;
+			return firstDay;
+		},
+		currentDay: function() {
+			return new Date(this.currentDate.year, this.currentDate.month, this.currentDate.date).getDay();
+		},
+		currentMonthDays: function() {
+			return new Date(this.currentDate.year, this.currentDate.month + 1, 0).getDate();
+		},
+		calendarArray: function() {
+			var calendarRows = [];
+			var startDay = new Date(this.currentDate.year, this.currentDate.month, 1); // 01.03.2020 - Sunday
+      		var lastDay = new Date(this.currentDate.year, this.currentDate.month + 1, 0); // 31.03.2020 - Tuesday
+			var startFrom = (startDay.getDay() + 6) % 7; // 0 - Monday == 0
+			var endFrom = (lastDay.getDay() + 6) % 7; // 6 - Sunday == 6
+
+			// Last Monday of previous month
+			startDay.setDate(startDay.getDate() - startFrom); // 24
+
+			// First Sunday in the next month
+			lastDay.setDate(lastDay.getDate() + (6 - endFrom)); // 5
+
+			var week = [];
+			while (startDay <= lastDay) {
+				//console.log(startDay);
+				// Add to array
+				week.push(new Date(startDay));
+				if (week.length === 7) {
+					calendarRows.push(week);
+					// Clean the array
+					week = [];
+				}
+				//console.log(startDay);
+				// Add day++
+				startDay.setDate(startDay.getDate() + 1);
+			}
+
+			return calendarRows;
+		}
+	},
+	methods: {
+		getCurrentDate: function() {
+			var today = new Date();
+			this.currentDate.date = today.getDate();
+			this.currentDate.month = today.getMonth();
+			this.currentDate.year = today.getFullYear();
+		},
+		previousMonth: function() {
+			if (this.currentDate.month === 0) {
+				this.currentDate.month = 11;
+				this.currentDate.year -= 1;
+			}
+			else {
+				this.currentDate.month -= 1;
+			} 
+			//console.log(this.currentDate.date, this.currentDate.month, this.currentDate.year);
+		},
+		nextMonth: function() {
+			if (this.currentDate.month === 11) {
+				this.currentDate.month = 0;
+				this.currentDate.year += 1;
+			}
+			else {
+				this.currentDate.month += 1;
+			}  
+			//console.log(this.currentDate.date, this.currentDate.month, this.currentDate.year);   
+		},
+		hidePastMonths: function() {
+			var today = new Date();
+			if (this.currentDate.date === today.getDate() && this.currentDate.month === today.getMonth() && this.currentDate.year === today.getFullYear()) {
+				//console.log('Yes!');
+				this.isHidden = true;
+			}
+			else {
+				//console.log('No!');
+				this.isHidden = false;
+			}
+		}
+	},
+	created: function() {
+		this.getCurrentDate();
+	}
+});
+
+ </script>
+
+</body>
+</html>

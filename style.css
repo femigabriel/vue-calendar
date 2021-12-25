@@ -1,0 +1,125 @@
+html {
+	font-size: 15px;
+}
+
+body {
+	font-size: 15px;
+	font-family: "Circular Std", sans-serif;
+	font-weight: 400;
+	color: #000;
+    background: url('https://images.unsplash.com/photo-1501139083538-0139583c060f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dGltZXxlbnwwfHwwfHw%3D&w=1000&q=80');
+   
+}
+
+.calendar-popup {
+	max-width: 650px;
+	width: calc(100% - 30px);
+	margin: 25px auto 0;
+	position: relative;
+}
+.calendar .calendar-navigation {
+	background: transparent;
+	text-align: center;
+}
+
+.calendar .calendar-navigation .previous-month,
+.calendar .calendar-navigation .next-month {
+	font-size: 1.333rem;
+	color: #fff;
+	text-decoration: none;
+}
+.calendar .calendar-navigation .previous-month:hover,
+.calendar .calendar-navigation .next-month:hover {
+	opacity: .7;
+}
+
+.calendar .calendar-navigation .previous-month {
+	background-position: -10px -10px;
+	margin-right: 20px;
+}
+
+.calendar .calendar-navigation .next-month {
+	background-position: -10px -44px;
+	margin-left: 20px;
+}
+.calendar .calendar-navigation span {
+	display: inline-block;
+	font-size: 3rem;
+	line-height: 1em;
+	font-weight: 100;
+	letter-spacing: .075em;
+	color: goldenrod;
+	padding: 12px 0 10px;
+}
+
+.calendar .calendar-header {
+	
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	border: 1px solid #202020;
+	border-bottom: 1px solid black;
+}
+
+.calendar .calendar-header div {
+	width: 14.286%;
+	background:darkslateblue;
+	padding: 15px 5px 13px;
+	text-align: center;
+	font-size: 1.0666666667rem;
+	line-height: 1em;
+	font-weight: 100;
+	letter-spacing: .075em;
+	text-transform: uppercase;
+	color:khaki;
+}
+
+.calendar .calendar-row {
+	
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.calendar .calendar-row > div {
+	width: 14.286%;
+	background: transparent;
+}
+
+.calendar .calendar-row > div.disabled span {
+	color: #000;
+	background: #202020;
+	border-bottom: 1px solid #000;
+    ;
+}
+
+.calendar .calendar-row > div.disabled span {
+	text-indent: -99999px;
+}
+
+.calendar .calendar-row span {
+	border-bottom: 1px solid #464646;
+	border-right: 1px solid #464646;
+    border-left: 1px solid #464646;
+	display: block;
+	font-size: 2.0666666667rem;
+	line-height: normal;
+	font-weight: 700;
+	letter-spacing: .075em;
+	color: #fff;
+	padding: 29px 1px;
+	position: relative;
+	z-index: 32;
+	text-align: center;
+	cursor: pointer;
+animation: ease-in-out;
+}
+.calendar .calendar-row span:hover {
+    background:cornflowerblue ;
+    color: burlywood;
+    animation: ease-in-out;
+}
